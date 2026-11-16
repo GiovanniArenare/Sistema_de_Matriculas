@@ -1,0 +1,82 @@
+@startuml
+title Sistema de Matrículas Universitárias - Casos de Uso
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+actor "Secretaria" as Secretaria
+actor "Sistema de Cobranças" as Cobrancas
+
+rectangle "Sistema de Matrículas Universitárias" {
+  usecase "Realizar login" as UC01
+  package "Aluno" {
+    usecase "Consultar disciplinas disponíveis" as UC02
+    usecase "Realizar matrícula" as UC03
+    usecase "Selecionar disciplinas de primeira opção" as UC04
+    usecase "Selecionar disciplinas alternativas" as UC05
+    usecase "Cancelar matrícula" as UC06
+    usecase "Consultar matrículas" as UC07
+    usecase "Validar período de matrícula" as UC08
+    usecase "Verificar limite de vagas" as UC09
+  }
+  package "Professor" {
+    usecase "Consultar disciplinas atribuídas" as UC10
+    usecase "Visualizar alunos matriculados" as UC11
+  }
+  package "Secretaria" {
+    usecase "Gerenciar alunos" as UC12
+    usecase "Gerenciar professores" as UC13
+    usecase "Gerenciar cursos" as UC14
+    usecase "Gerenciar disciplinas" as UC15
+    usecase "Gerenciar currículo semestral" as UC16
+    usecase "Gerenciar períodos de matrícula" as UC17
+    usecase "Encerrar período de matrícula" as UC18
+    usecase "Verificar quantidade de inscritos" as UC19
+    usecase "Cancelar ofertas com menos de 3 alunos" as UC20
+  }
+  usecase "Notificar sistema de cobranças" as UC21
+}
+
+Aluno -- UC01
+Aluno -- UC02
+Aluno -- UC03
+Aluno -- UC06
+Aluno -- UC07
+Professor -- UC01
+Professor -- UC10
+Professor -- UC11
+Secretaria -- UC01
+Secretaria -- UC12
+Secretaria -- UC13
+Secretaria -- UC14
+Secretaria -- UC15
+Secretaria -- UC16
+Secretaria -- UC17
+Secretaria -- UC18
+Cobrancas -- UC21
+
+UC03 ..> UC04 : <<include>>
+UC03 ..> UC05 : <<include>>
+UC03 ..> UC08 : <<include>>
+UC03 ..> UC09 : <<include>>
+UC03 ..> UC21 : <<include>>
+UC06 ..> UC08 : <<include>>
+UC18 ..> UC19 : <<include>>
+UC20 ..> UC18 : <<extend>>
+
+note bottom of UC04
+  Até 4 disciplinas de primeira opção.
+end note
+note bottom of UC05
+  Até 2 disciplinas alternativas.
+end note
+note bottom of UC09
+  Máximo de 60 alunos por oferta.
+end note
+note bottom of UC20
+  Ao encerrar o período, ofertas com
+  menos de 3 inscritos são canceladas.
+end note
+@enduml

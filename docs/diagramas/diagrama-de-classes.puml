@@ -1,0 +1,152 @@
+@startuml
+title Sistema de Matrículas Universitárias - Diagrama de Classes
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+hide empty members
+
+package "Usuários" {
+ abstract class Usuario {
+  - id: String
+  - nome: String
+  - email: String
+  - senhaHash: String
+  - perfil: PerfilUsuario
+  + validarSenha(senha: String): boolean
+ }
+ class Aluno {
+  - numeroMatricula: String
+  + consultarOfertas(): List<OfertaDisciplina>
+  + solicitarMatricula(ofertaId: String, tipo: TipoMatricula): Matricula
+  + cancelarMatricula(matriculaId: String): void
+ }
+ class Professor {
+  - registro: String
+  + consultarOfertas(): List<OfertaDisciplina>
+  + consultarMatriculados(ofertaId: String): List<Aluno>
+ }
+ class Secretaria {
+  - registroFuncional: String
+  + organizarCurriculo(): void
+  + encerrarPeriodo(periodoId: String): void
+ }
+ enum PerfilUsuario {
+  ALUNO
+  PROFESSOR
+  SECRETARIA
+ }
+ Usuario <|-- Aluno
+ Usuario <|-- Professor
+ Usuario <|-- Secretaria
+ Usuario --> PerfilUsuario
+}
+
+package "Estrutura acadêmica" {
+ class Curso {
+  - id: String
+  - nome: String
+  - totalCreditos: int
+ }
+ class Disciplina {
+  - id: String
+  - codigo: String
+  - nome: String
+  - creditos: int
+ }
+ class Curriculo {
+  - id: String
+  - semestre: String
+  + adicionarDisciplina(disciplinaId: String): void
+  + removerDisciplina(disciplinaId: String): void
+ }
+ class OfertaDisciplina {
+  - id: String
+  - semestre: String
+  - capacidadeMaxima: int = 60
+  - status: StatusOferta
+  + contarMatriculados(): int
+  + possuiVagas(): boolean
+  + definirStatusFinal(): void
+ }
+ enum StatusOferta {
+  PLANEJADA
+  ABERTA
+  ATIVA
+  CANCELADA
+  LOTADA
+ }
+ Curso "1" -- "0..*" Aluno : alunos
+ Curso "1" -- "0..*" Curriculo : currículos
+ Curso "1" -- "0..*" Disciplina : disciplinas
+ Curriculo "0..*" -- "1..*" Disciplina : inclui
+ Disciplina "1" -- "0..*" OfertaDisciplina : ofertas
+ Professor "1" -- "0..*" OfertaDisciplina : ministra
+ OfertaDisciplina --> StatusOferta
+}
+
+package "Matrículas" {
+ class PeriodoMatricula {
+  - id: String
+  - semestre: String
+  - inicio: LocalDateTime
+  - fim: LocalDateTime
+  - encerrado: boolean
+  + estaAberto(agora: LocalDateTime): boolean
+  + encerrar(): void
+ }
+ class Matricula {
+  - id: String
+  - dataSolicitacao: LocalDateTime
+  - tipo: TipoMatricula
+  - status: StatusMatricula
+  + cancelar(): void
+ }
+ enum TipoMatricula {
+  PRIMEIRA_OPCAO
+  ALTERNATIVA
+ }
+ enum StatusMatricula {
+  INSCRITA
+  CANCELADA
+  INDEFERIDA
+ }
+ Aluno "1" -- "0..*" Matricula : realiza
+ OfertaDisciplina "1" -- "0..*" Matricula : recebe
+ PeriodoMatricula "1" -- "0..*" Matricula : regula
+ Matricula --> TipoMatricula
+ Matricula --> StatusMatricula
+ }
+
+package "Integração de cobranças" {
+ class NotificacaoCobranca {
+  - id: String
+  - alunoId: String
+  - semestre: String
+  - dataEnvio: LocalDateTime
+  - status: String
+  + enviar(): void
+ }
+ class ServicoCobranca <<external>> {
+  + receberInscricao(alunoId: String, semestre: String): void
+ }
+ Aluno "1" -- "0..*" NotificacaoCobranca
+ NotificacaoCobranca ..> ServicoCobranca : notifica
+}
+
+note right of Matricula
+  Regras por aluno e semestre:
+  até 4 PRIMEIRA_OPCAO;
+  até 2 ALTERNATIVA.
+  Inscrição/cancelamento apenas
+  durante período aberto.
+end note
+note right of OfertaDisciplina
+  Máximo de 60 inscritos.
+  Ao final do período:
+  menos de 3 inscritos => CANCELADA;
+  3 ou mais => ATIVA.
+end note
+note bottom of NotificacaoCobranca
+  Integração externa pode ser
+  simulada no protótipo.
+end note
+@enduml

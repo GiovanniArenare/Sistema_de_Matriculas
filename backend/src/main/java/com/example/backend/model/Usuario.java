@@ -1,24 +1,34 @@
 package com.example.backend.model;
 
+import com.example.backend.model.enums.PerfilUsuario;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "usuarios")
 public abstract class Usuario {
 
+    @Id
     private String id;
     private String nome;
     private String email;
     private String senhaHash;
+    private PerfilUsuario perfil;
 
     public Usuario() {
     }
 
-    public Usuario(String id, String nome, String email, String senhaHash) {
+    public Usuario(String id, String nome, String email,
+                   String senhaHash) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senhaHash = senhaHash;
     }
 
-    public boolean autenticar(String senha) {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+    public boolean validarSenha(String senha) {
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
     public String getId() {
@@ -51,5 +61,13 @@ public abstract class Usuario {
 
     public void setSenhaHash(String senhaHash) {
         this.senhaHash = senhaHash;
+    }
+
+    public PerfilUsuario getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(PerfilUsuario perfil) {
+        this.perfil = perfil;
     }
 }

@@ -5,23 +5,25 @@ import java.time.LocalDateTime;
 public class NotificacaoCobranca {
 
     private String id;
-    private Aluno aluno;
+    private String alunoId;
     private String semestre;
     private LocalDateTime dataEnvio;
-    private boolean enviada;
+    private String status;
 
     public NotificacaoCobranca() {
     }
 
-    public NotificacaoCobranca(String id, Aluno aluno, String semestre) {
+    public NotificacaoCobranca(String id, String alunoId, String semestre) {
         this.id = id;
-        this.aluno = aluno;
+        this.alunoId = alunoId;
         this.semestre = semestre;
-        this.enviada = false;
+        this.status = "PENDENTE";
     }
 
-    public void enviarNotificacao() {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+    public void enviar() {
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
     public String getId() {
@@ -32,12 +34,12 @@ public class NotificacaoCobranca {
         this.id = id;
     }
 
-    public Aluno getAluno() {
-        return aluno;
+    public String getAlunoId() {
+        return alunoId;
     }
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
+    public void setAlunoId(String alunoId) {
+        this.alunoId = alunoId;
     }
 
     public String getSemestre() {
@@ -56,11 +58,11 @@ public class NotificacaoCobranca {
         this.dataEnvio = dataEnvio;
     }
 
-    public boolean isEnviada() {
-        return enviada;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEnviada(boolean enviada) {
-        this.enviada = enviada;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

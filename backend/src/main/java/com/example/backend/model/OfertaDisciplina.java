@@ -8,9 +8,9 @@ public class OfertaDisciplina {
     private Disciplina disciplina;
     private Professor professor;
     private String semestre;
-    private int vagasMaximas = 60;
+    private int capacidadeMaxima = 60;
     private int quantidadeMatriculados;
-    private StatusOferta status;
+    private StatusOferta status = StatusOferta.PLANEJADA;
 
     public OfertaDisciplina() {
     }
@@ -21,15 +21,27 @@ public class OfertaDisciplina {
         this.disciplina = disciplina;
         this.professor = professor;
         this.semestre = semestre;
-        this.status = StatusOferta.PENDENTE;
+        this.capacidadeMaxima = 60;
+        this.quantidadeMatriculados = 0;
+        this.status = StatusOferta.PLANEJADA;
+    }
+
+    public int contarMatriculados() {
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
     public boolean possuiVagas() {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
-    public void verificarAtivacao() {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+    public void definirStatusFinal() {
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
     public String getId() {
@@ -64,12 +76,12 @@ public class OfertaDisciplina {
         this.semestre = semestre;
     }
 
-    public int getVagasMaximas() {
-        return vagasMaximas;
+    public int getCapacidadeMaxima() {
+        return capacidadeMaxima;
     }
 
-    public void setVagasMaximas(int vagasMaximas) {
-        this.vagasMaximas = vagasMaximas;
+    public void setCapacidadeMaxima(int capacidadeMaxima) {
+        this.capacidadeMaxima = capacidadeMaxima;
     }
 
     public int getQuantidadeMatriculados() {

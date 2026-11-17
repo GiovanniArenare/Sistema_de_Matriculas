@@ -19,11 +19,11 @@ public class Curriculo {
         this.semestre = semestre;
     }
 
-    public void adicionarDisciplina(Disciplina disciplina) {
+    public void adicionarDisciplina(String disciplinaId) {
         throw new UnsupportedOperationException("Método ainda não implementado");
     }
 
-    public void removerDisciplina(Disciplina disciplina) {
+    public void removerDisciplina(String disciplinaId) {
         throw new UnsupportedOperationException("Método ainda não implementado");
     }
 

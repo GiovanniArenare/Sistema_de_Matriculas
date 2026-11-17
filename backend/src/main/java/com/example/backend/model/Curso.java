@@ -7,24 +7,16 @@ public class Curso {
 
     private String id;
     private String nome;
-    private int creditos;
+    private int totalCreditos;
     private List<Disciplina> disciplinas = new ArrayList<>();
 
     public Curso() {
     }
 
-    public Curso(String id, String nome, int creditos) {
+    public Curso(String id, String nome, int totalCreditos) {
         this.id = id;
         this.nome = nome;
-        this.creditos = creditos;
-    }
-
-    public void adicionarDisciplina(Disciplina disciplina) {
-        throw new UnsupportedOperationException("Método ainda não implementado");
-    }
-
-    public void removerDisciplina(Disciplina disciplina) {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+        this.totalCreditos = totalCreditos;
     }
 
     public String getId() {
@@ -43,12 +35,12 @@ public class Curso {
         this.nome = nome;
     }
 
-    public int getCreditos() {
-        return creditos;
+    public int getTotalCreditos() {
+        return totalCreditos;
     }
 
-    public void setCreditos(int creditos) {
-        this.creditos = creditos;
+    public void setTotalCreditos(int totalCreditos) {
+        this.totalCreditos = totalCreditos;
     }
 
     public List<Disciplina> getDisciplinas() {

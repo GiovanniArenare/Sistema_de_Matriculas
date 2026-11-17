@@ -1,6 +1,7 @@
 package com.example.backend.model;
 
 import java.time.LocalDateTime;
+
 import com.example.backend.model.enums.TipoMatricula;
 import com.example.backend.model.enums.StatusMatricula;
 
@@ -11,7 +12,7 @@ public class Matricula {
     private OfertaDisciplina oferta;
     private TipoMatricula tipo;
     private StatusMatricula status;
-    private LocalDateTime dataMatricula;
+    private LocalDateTime dataSolicitacao;
 
     public Matricula() {
     }
@@ -22,12 +23,14 @@ public class Matricula {
         this.aluno = aluno;
         this.oferta = oferta;
         this.tipo = tipo;
-        this.status = StatusMatricula.ATIVA;
-        this.dataMatricula = LocalDateTime.now();
+        this.status = StatusMatricula.INSCRITA;
+        this.dataSolicitacao = LocalDateTime.now();
     }
 
     public void cancelar() {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
     public String getId() {
@@ -70,11 +73,11 @@ public class Matricula {
         this.status = status;
     }
 
-    public LocalDateTime getDataMatricula() {
-        return dataMatricula;
+    public LocalDateTime getDataSolicitacao() {
+        return dataSolicitacao;
     }
 
-    public void setDataMatricula(LocalDateTime dataMatricula) {
-        this.dataMatricula = dataMatricula;
+    public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+        this.dataSolicitacao = dataSolicitacao;
     }
 }

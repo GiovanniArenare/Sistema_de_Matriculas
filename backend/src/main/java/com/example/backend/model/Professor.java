@@ -1,5 +1,7 @@
 package com.example.backend.model;
 
+import java.util.List;
+
 public class Professor extends Usuario {
 
     private String registro;
@@ -14,11 +16,11 @@ public class Professor extends Usuario {
         this.registro = registro;
     }
 
-    public void consultarDisciplinas() {
+    public List<OfertaDisciplina> consultarOfertas() {
         throw new UnsupportedOperationException("Método ainda não implementado");
     }
 
-    public void consultarAlunos() {
+    public List<Aluno> consultarMatriculados(String ofertaId) {
         throw new UnsupportedOperationException("Método ainda não implementado");
     }
 

@@ -1,27 +1,37 @@
 package com.example.backend.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PeriodoMatricula {
 
     private String id;
     private String semestre;
-    private LocalDate dataInicio;
-    private LocalDate dataFim;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
+    private boolean encerrado;
 
     public PeriodoMatricula() {
     }
 
     public PeriodoMatricula(String id, String semestre,
-                            LocalDate dataInicio, LocalDate dataFim) {
+                            LocalDateTime inicio, LocalDateTime fim) {
         this.id = id;
         this.semestre = semestre;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
+        this.inicio = inicio;
+        this.fim = fim;
+        this.encerrado = false;
     }
 
-    public boolean estaAberto() {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+    public boolean estaAberto(LocalDateTime agora) {
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
+    }
+
+    public void encerrar() {
+        throw new UnsupportedOperationException(
+            "Método ainda não implementado"
+        );
     }
 
     public String getId() {
@@ -40,19 +50,27 @@ public class PeriodoMatricula {
         this.semestre = semestre;
     }
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
+    public LocalDateTime getInicio() {
+        return inicio;
     }
 
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setInicio(LocalDateTime inicio) {
+        this.inicio = inicio;
     }
 
-    public LocalDate getDataFim() {
-        return dataFim;
+    public LocalDateTime getFim() {
+        return fim;
     }
 
-    public void setDataFim(LocalDate dataFim) {
-        this.dataFim = dataFim;
+    public void setFim(LocalDateTime fim) {
+        this.fim = fim;
+    }
+
+    public boolean isEncerrado() {
+        return encerrado;
+    }
+
+    public void setEncerrado(boolean encerrado) {
+        this.encerrado = encerrado;
     }
 }

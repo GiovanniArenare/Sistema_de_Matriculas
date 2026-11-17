@@ -1,11 +1,18 @@
+
 package com.example.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "curriculos")
 public class Curriculo {
 
+    @Id
     private String id;
+
     private Curso curso;
     private String semestre;
     private List<Disciplina> disciplinas = new ArrayList<>();
@@ -20,11 +27,15 @@ public class Curriculo {
     }
 
     public void adicionarDisciplina(String disciplinaId) {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+        throw new UnsupportedOperationException(
+                "Método ainda não implementado"
+        );
     }
 
     public void removerDisciplina(String disciplinaId) {
-        throw new UnsupportedOperationException("Método ainda não implementado");
+        throw new UnsupportedOperationException(
+                "Método ainda não implementado"
+        );
     }
 
     public String getId() {

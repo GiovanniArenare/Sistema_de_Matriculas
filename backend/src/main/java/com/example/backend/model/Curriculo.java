@@ -13,29 +13,43 @@ public class Curriculo {
     @Id
     private String id;
 
-    private Curso curso;
+    private String cursoId;
     private String semestre;
-    private List<Disciplina> disciplinas = new ArrayList<>();
+    private List<String> disciplinaIds = new ArrayList<>();
 
     public Curriculo() {
     }
 
-    public Curriculo(String id, Curso curso, String semestre) {
+    public Curriculo(String id, String cursoId, String semestre) {
         this.id = id;
-        this.curso = curso;
+        this.cursoId = cursoId;
         this.semestre = semestre;
     }
 
     public void adicionarDisciplina(String disciplinaId) {
-        throw new UnsupportedOperationException(
-                "Método ainda não implementado"
-        );
+
+        if (disciplinaId == null || disciplinaId.isBlank()) {
+            throw new IllegalArgumentException(
+                    "O ID da disciplina é obrigatório."
+            );
+        }
+
+        if (disciplinaIds.contains(disciplinaId)) {
+            throw new IllegalArgumentException(
+                    "Esta disciplina já pertence ao currículo."
+            );
+        }
+
+        disciplinaIds.add(disciplinaId);
     }
 
     public void removerDisciplina(String disciplinaId) {
-        throw new UnsupportedOperationException(
-                "Método ainda não implementado"
-        );
+
+        if (!disciplinaIds.remove(disciplinaId)) {
+            throw new IllegalArgumentException(
+                    "Esta disciplina não pertence ao currículo."
+            );
+        }
     }
 
     public String getId() {
@@ -46,12 +60,12 @@ public class Curriculo {
         this.id = id;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public String getCursoId() {
+        return cursoId;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursoId(String cursoId) {
+        this.cursoId = cursoId;
     }
 
     public String getSemestre() {
@@ -62,11 +76,13 @@ public class Curriculo {
         this.semestre = semestre;
     }
 
-    public List<Disciplina> getDisciplinas() {
-        return disciplinas;
+    public List<String> getDisciplinaIds() {
+        return disciplinaIds;
     }
 
-    public void setDisciplinas(List<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
+    public void setDisciplinaIds(List<String> disciplinaIds) {
+        this.disciplinaIds = disciplinaIds == null
+                ? new ArrayList<>()
+                : new ArrayList<>(disciplinaIds);
     }
 }

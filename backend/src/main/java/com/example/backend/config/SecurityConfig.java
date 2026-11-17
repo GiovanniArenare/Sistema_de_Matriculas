@@ -1,11 +1,13 @@
+
 package com.example.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -23,7 +25,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
 
-                // Cadastro público de alunos
+                // Cadastro público somente de alunos
                 .requestMatchers(
                     HttpMethod.POST,
                     "/api/usuarios/alunos"
@@ -31,29 +33,32 @@ public class SecurityConfig {
 
                 .requestMatchers("/error").permitAll()
 
-                // Rotas exclusivas da secretaria
+                // Secretaria
                 .requestMatchers("/api/secretaria/**")
                     .hasRole("SECRETARIA")
 
-                // Rotas exclusivas dos professores
+                // Professores
                 .requestMatchers("/api/professores/**")
                     .hasRole("PROFESSOR")
 
-                // Rotas exclusivas dos alunos
+                // Alunos
                 .requestMatchers("/api/alunos/**")
                     .hasRole("ALUNO")
 
-                // Demais rotas exigem autenticação
+                // Demais endpoints
                 .anyRequest().authenticated()
             )
 
-            .csrf(csrf -> csrf
-                .ignoringRequestMatchers(
-                    "/api/usuarios/alunos"
-                )
+            // API sem sessão de autenticação
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
-            .formLogin(form -> form.permitAll())
+            // Configuração temporária para API HTTP Basic
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/**")
+            )
+
             .httpBasic(basic -> {});
 
         return http.build();

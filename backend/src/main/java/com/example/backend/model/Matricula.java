@@ -1,3 +1,4 @@
+
 package com.example.backend.model;
 
 import java.time.LocalDateTime;
@@ -5,33 +6,64 @@ import java.time.LocalDateTime;
 import com.example.backend.model.enums.TipoMatricula;
 import com.example.backend.model.enums.StatusMatricula;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "matriculas")
 public class Matricula {
 
+    @Id
     private String id;
-    private Aluno aluno;
-    private OfertaDisciplina oferta;
+
+    private String alunoId;
+    private String ofertaId;
+
     private TipoMatricula tipo;
     private StatusMatricula status;
+
     private LocalDateTime dataSolicitacao;
 
     public Matricula() {
     }
 
-    public Matricula(String id, Aluno aluno,
-                     OfertaDisciplina oferta, TipoMatricula tipo) {
-        this.id = id;
-        this.aluno = aluno;
-        this.oferta = oferta;
+    public Matricula(
+            String alunoId,
+            String ofertaId,
+            TipoMatricula tipo) {
+
+        this.alunoId = alunoId;
+        this.ofertaId = ofertaId;
         this.tipo = tipo;
+
         this.status = StatusMatricula.INSCRITA;
         this.dataSolicitacao = LocalDateTime.now();
     }
 
+    // Cancelar uma matrícula
     public void cancelar() {
-        throw new UnsupportedOperationException(
-            "Método ainda não implementado"
-        );
+
+        if (status != StatusMatricula.INSCRITA) {
+            throw new IllegalStateException(
+                    "Somente matrículas inscritas podem ser canceladas."
+            );
+        }
+
+        status = StatusMatricula.CANCELADA;
     }
+
+
+    // Indeferir matrícula quando a oferta não for ativada
+    public void indeferir() {
+
+        if (status != StatusMatricula.INSCRITA) {
+            throw new IllegalStateException(
+                    "Somente matrículas inscritas podem ser indeferidas."
+            );
+        }
+
+        status = StatusMatricula.INDEFERIDA;
+    }
+
 
     public String getId() {
         return id;
@@ -41,20 +73,20 @@ public class Matricula {
         this.id = id;
     }
 
-    public Aluno getAluno() {
-        return aluno;
+    public String getAlunoId() {
+        return alunoId;
     }
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
+    public void setAlunoId(String alunoId) {
+        this.alunoId = alunoId;
     }
 
-    public OfertaDisciplina getOferta() {
-        return oferta;
+    public String getOfertaId() {
+        return ofertaId;
     }
 
-    public void setOferta(OfertaDisciplina oferta) {
-        this.oferta = oferta;
+    public void setOfertaId(String ofertaId) {
+        this.ofertaId = ofertaId;
     }
 
     public TipoMatricula getTipo() {
@@ -77,7 +109,9 @@ public class Matricula {
         return dataSolicitacao;
     }
 
-    public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+    public void setDataSolicitacao(
+            LocalDateTime dataSolicitacao) {
+
         this.dataSolicitacao = dataSolicitacao;
     }
 }

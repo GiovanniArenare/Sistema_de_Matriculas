@@ -1,9 +1,9 @@
 package com.example.backend.model.enums;
 
 public enum StatusOferta {
-    PLANEJADA,
     ABERTA,
     ATIVA,
+    LOTADA,
     CANCELADA,
-    LOTADA
+    ENCERRADA
 }
